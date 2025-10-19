@@ -3,9 +3,10 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #F5F8FA;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8eef5 50%, #f5f8fa 100%);
   color: #1C2B3A;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Navigation Bar */
@@ -350,16 +351,39 @@ header {
 }
 
 .action-card {
-  background: white;
-  border-radius: 15px;
+  background: linear-gradient(145deg, #ffffff, #f0f4f8);
+  border-radius: 20px;
   padding: 25px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.08), -8px -8px 20px rgba(255, 255, 255, 0.9);
   text-align: center;
-  transition: transform 0.2s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(32, 178, 170, 0.15), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 .action-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 
+    12px 12px 30px rgba(0, 0, 0, 0.12), 
+    -12px -12px 30px rgba(255, 255, 255, 1),
+    0 0 30px rgba(32, 178, 170, 0.3);
+}
+
+.action-card:hover::before {
+  opacity: 1;
 }
 
 .action-card.primary {
@@ -391,20 +415,48 @@ header {
 }
 
 .card-button {
-  background: #20B2AA;
+  background: linear-gradient(145deg, #2CC5B5, #20B2AA);
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 12px;
   text-decoration: none;
   display: inline-block;
   font-weight: 500;
-  transition: background 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  box-shadow: 4px 4px 12px rgba(32, 178, 170, 0.3), -2px -2px 8px rgba(44, 197, 181, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
 .card-button:hover {
-  background: #1a9b94;
+  background: linear-gradient(145deg, #20B2AA, #1a9b94);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 16px rgba(32, 178, 170, 0.4), -3px -3px 12px rgba(44, 197, 181, 0.3);
+}
+
+.card-button:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.card-button:active {
+  transform: translateY(0);
+  box-shadow: 2px 2px 8px rgba(32, 178, 170, 0.3);
 }
 
 .card-button.secondary {
@@ -525,37 +577,46 @@ header {
 .btn-small {
   padding: 8px 16px;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-small:not(.secondary):not(.danger) {
-  background: #20B2AA;
+  background: linear-gradient(145deg, #2CC5B5, #20B2AA);
   color: white;
+  box-shadow: 3px 3px 10px rgba(32, 178, 170, 0.3), -2px -2px 6px rgba(44, 197, 181, 0.2);
 }
 
 .btn-small:not(.secondary):not(.danger):hover {
-  background: #1a9b94;
+  background: linear-gradient(145deg, #20B2AA, #1a9b94);
+  transform: translateY(-1px);
+  box-shadow: 4px 4px 12px rgba(32, 178, 170, 0.4), -2px -2px 8px rgba(44, 197, 181, 0.3);
 }
 
 .btn-small.secondary {
-  background: #F3F4F6;
+  background: linear-gradient(145deg, #F3F4F6, #E5E7EB);
   color: #6B7280;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1), -2px -2px 6px rgba(255, 255, 255, 0.7);
 }
 
 .btn-small.secondary:hover {
-  background: #E5E7EB;
+  background: linear-gradient(145deg, #E5E7EB, #D1D5DB);
+  transform: translateY(-1px);
 }
 
 .btn-small.danger {
-  background: #EF4444;
+  background: linear-gradient(145deg, #EF4444, #DC2626);
   color: white;
+  box-shadow: 3px 3px 10px rgba(239, 68, 68, 0.3), -2px -2px 6px rgba(220, 38, 38, 0.2);
 }
 
 .btn-small.danger:hover {
-  background: #DC2626;
+  background: linear-gradient(145deg, #DC2626, #B91C1C);
+  transform: translateY(-1px);
 }
 
 /* Settings Styles */
@@ -887,23 +948,46 @@ footer {
 }
 
 #send-btn {
-  background: linear-gradient(135deg, #2CC5B5 0%, #20B2AA 100%);
+  background: linear-gradient(145deg, #2CC5B5, #20B2AA);
   border: none;
   color: white;
   padding: 12px 20px;
   border-radius: 18px;
   margin-left: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(44, 197, 181, 0.3);
-  border: 1px solid rgba(32, 178, 170, 0.3);
+  box-shadow: 4px 4px 12px rgba(32, 178, 170, 0.3), -2px -2px 8px rgba(44, 197, 181, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+#send-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
 #send-btn:hover {
-  background: linear-gradient(135deg, #20B2AA 0%, #1a9b94 100%);
+  background: linear-gradient(145deg, #20B2AA, #1a9b94);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(44, 197, 181, 0.4);
+  box-shadow: 6px 6px 16px rgba(32, 178, 170, 0.4), -3px -3px 12px rgba(44, 197, 181, 0.3);
+}
+
+#send-btn:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+#send-btn:active {
+  transform: translateY(0);
 }
 
 .clear-btn {
@@ -1076,4 +1160,187 @@ footer {
 
 .app-footer p {
   margin: 0;
+}
+
+/* Page Transition Animations */
+.main-content {
+  animation: pageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-fade-out {
+  animation: pageFadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes pageFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Toast Notification Styles */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.toast {
+  background: linear-gradient(145deg, #ffffff, #f0f4f8);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 
+    8px 8px 20px rgba(0, 0, 0, 0.15), 
+    -4px -4px 12px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(32, 178, 170, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: toastSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 4px solid #20B2AA;
+  position: relative;
+  overflow: hidden;
+}
+
+.toast::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #20B2AA, #2CC5B5);
+}
+
+.toast.toast-success {
+  border-left-color: #10B981;
+}
+
+.toast.toast-success::before {
+  background: linear-gradient(180deg, #10B981, #34D399);
+}
+
+.toast.toast-error {
+  border-left-color: #EF4444;
+}
+
+.toast.toast-error::before {
+  background: linear-gradient(180deg, #EF4444, #F87171);
+}
+
+.toast.toast-warning {
+  border-left-color: #F59E0B;
+}
+
+.toast.toast-warning::before {
+  background: linear-gradient(180deg, #F59E0B, #FBBF24);
+}
+
+.toast-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 600;
+  color: #1C2B3A;
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+}
+
+.toast-message {
+  color: #6B7280;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: #9CA3AF;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1C2B3A;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.toast.toast-removing {
+  animation: toastSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+  }
+}
+
+/* Mobile Toast Adjustments */
+@media (max-width: 768px) {
+  .toast-container {
+    top: 70px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+  
+  .toast {
+    padding: 14px 16px;
+  }
+  
+  .toast-icon {
+    font-size: 1.3rem;
+  }
 }
