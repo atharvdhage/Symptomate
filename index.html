@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="symptomate_logo_small.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symptomate | AI Health Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="nav-logo">
+        <span class="nav-title">Symptomate</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Chat</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="chat-container">
+        <header>
+          <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="logo">
+          <h1>Symptomate</h1>
+          <p class="subtitle">Your friendly AI health assistant</p>
+        </header>
+
+        <main id="chat-area">
+          <div class="message-container bot-container">
+            <div class="avatar bot-avatar">
+              <img src="symptomate_logo_small.png" alt="Symptomate" class="avatar-image">
+            </div>
+            <div class="message-content">
+              <div class="bot-message">
+                👋 Hello! I'm Symptomate. Tell me your symptoms, and I'll help you understand what might be happening.
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <footer>
+          <input type="text" id="user-input" placeholder="Describe your symptoms..." />
+          <button id="send-btn">Send</button>
+          <button id="clear-chat-btn" class="clear-btn" onclick="clearChatHistory()">Clear Chat</button>
+        </footer>
+      </div>
+    </div>
+    
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Dark mode functionality
+    function toggleDarkMode(isDark) {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }
+
+    // Load dark mode preference on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const darkMode = localStorage.getItem('symptomate_dark_mode') === 'true';
+      toggleDarkMode(darkMode);
+    });
+  </script>
+</body>
+</html>

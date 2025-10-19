@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="symptomate_logo_small.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symptomate | AI Health Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="splash-body">
+  <div class="splash-container">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="main-logo">
+        <h1 class="splash-title">Symptomate</h1>
+        <p class="splash-subtitle">Your friendly AI Health Assistant</p>
+      </div>
+      
+      <div class="splash-description">
+        <p>Get instant, professional health guidance powered by AI. Describe your symptoms and receive personalized recommendations.</p>
+      </div>
+      
+      <button class="start-consultation-btn" onclick="startConsultation()">
+        <span class="btn-icon">🩺</span>
+        Start Consultation
+      </button>
+      
+      <div class="splash-features">
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <span>Instant Responses</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔒</span>
+          <span>Privacy Protected</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🎯</span>
+          <span>Personalized Care</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="splash-footer">
+      <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
+    </div>
+  </div>
+
+  <script>
+    function startConsultation() {
+      // Store fake user login
+      const userData = {
+        username: 'User_' + Math.random().toString(36).substr(2, 9),
+        loginTime: new Date().toISOString(),
+        isLoggedIn: true
+      };
+      localStorage.setItem('symptomate_user', JSON.stringify(userData));
+      
+      // Redirect to main app
+      window.location.href = 'index.html';
+    }
+    
+    // Check if user is already logged in
+    document.addEventListener('DOMContentLoaded', function() {
+      const userData = localStorage.getItem('symptomate_user');
+      if (userData) {
+        // User is already logged in, redirect to app
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="symptomate_logo_small.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symptomate | Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="nav-logo">
+        <span class="nav-title">Symptomate</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Chat</a>
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+        <a href="settings.html" class="nav-link">Settings</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Dashboard Content -->
+      <main class="dashboard">
+      <!-- Welcome Section -->
+      <section class="welcome-section">
+        <h1>Welcome back! 👋</h1>
+        <p>Here's your health overview and quick access to features.</p>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-cards">
+          <div class="action-card primary">
+            <div class="card-icon">💬</div>
+            <h3>Start New Chat</h3>
+            <p>Begin a new conversation with your AI health assistant</p>
+            <a href="index.html" class="card-button">Start Chat</a>
+          </div>
+          
+          <div class="action-card secondary">
+            <div class="card-icon">📊</div>
+            <h3>My Reports</h3>
+            <p>View your health reports and symptom history</p>
+            <button class="card-button" onclick="showComingSoon()">View Reports</button>
+          </div>
+
+          <div class="action-card tertiary">
+            <div class="card-icon">⚙️</div>
+            <h3>Settings</h3>
+            <p>Customize your experience and preferences</p>
+            <a href="settings.html" class="card-button">Open Settings</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Health History -->
+      <section class="health-history">
+        <h2>Recent Health Activity</h2>
+        <div class="history-cards">
+          <div class="history-item">
+            <div class="history-icon">🤒</div>
+            <div class="history-content">
+              <h4>Fever & Fatigue</h4>
+              <p>Yesterday • 2:30 PM</p>
+              <span class="status resolved">Resolved</span>
+            </div>
+          </div>
+          
+          <div class="history-item">
+            <div class="history-icon">🤧</div>
+            <div class="history-content">
+              <h4>Cold Symptoms</h4>
+              <p>3 days ago • 10:15 AM</p>
+              <span class="status ongoing">Ongoing</span>
+            </div>
+          </div>
+          
+          <div class="history-item">
+            <div class="history-icon">😴</div>
+            <div class="history-content">
+              <h4>Sleep Issues</h4>
+              <p>1 week ago • 9:45 PM</p>
+              <span class="status resolved">Resolved</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Saved Chats -->
+      <section class="saved-chats">
+        <h2>Recent Conversations</h2>
+        <div class="chat-list">
+          <div class="chat-item">
+            <div class="chat-preview">
+              <h4>Headache & Eye Strain</h4>
+              <p>Started 2 hours ago</p>
+            </div>
+            <div class="chat-actions">
+              <button class="btn-small">Continue</button>
+              <button class="btn-small secondary">Delete</button>
+            </div>
+          </div>
+          
+          <div class="chat-item">
+            <div class="chat-preview">
+              <h4>Stomach Pain Discussion</h4>
+              <p>Started yesterday</p>
+            </div>
+            <div class="chat-actions">
+              <button class="btn-small">Continue</button>
+              <button class="btn-small secondary">Delete</button>
+            </div>
+          </div>
+          
+          <div class="chat-item">
+            <div class="chat-preview">
+              <h4>Cold & Congestion</h4>
+              <p>Started 3 days ago</p>
+            </div>
+            <div class="chat-actions">
+              <button class="btn-small">Continue</button>
+              <button class="btn-small secondary">Delete</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      </main>
+    </div>
+    
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function showComingSoon() {
+      alert('This feature is coming soon! 🚀');
+    }
+
+    // Dark mode functionality
+    function toggleDarkMode(isDark) {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }
+
+    // Load dark mode preference on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const darkMode = localStorage.getItem('symptomate_dark_mode') === 'true';
+      toggleDarkMode(darkMode);
+    });
+  </script>
+</body>
+</html>

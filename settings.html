@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="symptomate_logo_small.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symptomate | Settings</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="nav-logo">
+        <span class="nav-title">Symptomate</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Chat</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="settings.html" class="nav-link active">Settings</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Settings Content -->
+      <main class="settings">
+      <section class="settings-header">
+        <h1>Settings ⚙️</h1>
+        <p>Customize your Symptomate experience</p>
+      </section>
+
+      <!-- Theme Settings -->
+      <section class="settings-section">
+        <h2>Appearance</h2>
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Theme</h3>
+            <p>Choose between light and dark mode</p>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-switch">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Dark Mode</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notification Settings -->
+      <section class="settings-section">
+        <h2>Notifications</h2>
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Push Notifications</h3>
+            <p>Receive reminders and health tips</p>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-switch">
+              <input type="checkbox" id="notificationsToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Enabled</span>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Daily Health Reminders</h3>
+            <p>Get daily check-in reminders</p>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-switch">
+              <input type="checkbox" id="dailyRemindersToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Enabled</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Language Settings -->
+      <section class="settings-section">
+        <h2>Language & Region</h2>
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Language</h3>
+            <p>Select your preferred language</p>
+          </div>
+          <div class="setting-control">
+            <select class="language-select" id="languageSelect">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+              <option value="it">Italiano</option>
+              <option value="pt">Português</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI Settings -->
+      <section class="settings-section">
+        <h2>AI Configuration</h2>
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>AI API Key</h3>
+            <p>Connect your AI service for enhanced responses</p>
+          </div>
+          <div class="setting-control">
+            <input type="password" class="api-key-input" placeholder="Enter your API key" id="apiKeyInput">
+            <button class="btn-small" onclick="saveApiKey()">Save</button>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Response Style</h3>
+            <p>Choose how detailed you want AI responses</p>
+          </div>
+          <div class="setting-control">
+            <select class="response-style-select" id="responseStyleSelect">
+              <option value="detailed">Detailed & Comprehensive</option>
+              <option value="concise">Concise & Quick</option>
+              <option value="balanced">Balanced</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Privacy Settings -->
+      <section class="settings-section">
+        <h2>Privacy & Data</h2>
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Data Collection</h3>
+            <p>Allow anonymous usage data to improve the service</p>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-switch">
+              <input type="checkbox" id="dataCollectionToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Enabled</span>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Chat History</h3>
+            <p>Keep your conversation history for future reference</p>
+          </div>
+          <div class="setting-control">
+            <label class="toggle-switch">
+              <input type="checkbox" id="chatHistoryToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Enabled</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Account Actions -->
+      <section class="settings-section">
+        <h2>Account</h2>
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Export Data</h3>
+            <p>Download your health data and chat history</p>
+          </div>
+          <div class="setting-control">
+            <button class="btn-small secondary" onclick="exportData()">Export</button>
+          </div>
+        </div>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <h3>Clear All Data</h3>
+            <p>Permanently delete all your data and chat history</p>
+          </div>
+          <div class="setting-control">
+            <button class="btn-small danger" onclick="clearAllData()">Clear Data</button>
+          </div>
+        </div>
+      </section>
+      </main>
+    </div>
+    
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function saveApiKey() {
+      const apiKey = document.getElementById('apiKeyInput').value;
+      if (apiKey) {
+        localStorage.setItem('symptomate_api_key', apiKey);
+        alert('API key saved successfully! 🔑');
+      } else {
+        alert('Please enter a valid API key.');
+      }
+    }
+
+    function exportData() {
+      alert('Data export feature coming soon! 📊');
+    }
+
+    function clearAllData() {
+      if (confirm('Are you sure you want to delete all your data? This action cannot be undone.')) {
+        localStorage.clear();
+        alert('All data has been cleared. 🔄');
+      }
+    }
+
+    // Dark mode toggle function
+    function toggleDarkMode(isDark) {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }
+
+    // Load saved settings
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load theme preference
+      const darkMode = localStorage.getItem('symptomate_dark_mode') === 'true';
+      document.getElementById('darkModeToggle').checked = darkMode;
+      toggleDarkMode(darkMode);
+      
+      // Load other settings
+      const notifications = localStorage.getItem('symptomate_notifications') !== 'false';
+      document.getElementById('notificationsToggle').checked = notifications;
+      
+      const dailyReminders = localStorage.getItem('symptomate_daily_reminders') !== 'false';
+      document.getElementById('dailyRemindersToggle').checked = dailyReminders;
+      
+      const language = localStorage.getItem('symptomate_language') || 'en';
+      document.getElementById('languageSelect').value = language;
+      
+      const responseStyle = localStorage.getItem('symptomate_response_style') || 'balanced';
+      document.getElementById('responseStyleSelect').value = responseStyle;
+      
+      const dataCollection = localStorage.getItem('symptomate_data_collection') !== 'false';
+      document.getElementById('dataCollectionToggle').checked = dataCollection;
+      
+      const chatHistory = localStorage.getItem('symptomate_chat_history') !== 'false';
+      document.getElementById('chatHistoryToggle').checked = chatHistory;
+      
+      const savedApiKey = localStorage.getItem('symptomate_api_key');
+      if (savedApiKey) {
+        document.getElementById('apiKeyInput').value = savedApiKey;
+      }
+    });
+
+    // Save settings when changed
+    document.getElementById('darkModeToggle').addEventListener('change', function() {
+      localStorage.setItem('symptomate_dark_mode', this.checked);
+      toggleDarkMode(this.checked);
+    });
+
+    document.getElementById('notificationsToggle').addEventListener('change', function() {
+      localStorage.setItem('symptomate_notifications', this.checked);
+    });
+
+    document.getElementById('dailyRemindersToggle').addEventListener('change', function() {
+      localStorage.setItem('symptomate_daily_reminders', this.checked);
+    });
+
+    document.getElementById('languageSelect').addEventListener('change', function() {
+      localStorage.setItem('symptomate_language', this.value);
+    });
+
+    document.getElementById('responseStyleSelect').addEventListener('change', function() {
+      localStorage.setItem('symptomate_response_style', this.value);
+    });
+
+    document.getElementById('dataCollectionToggle').addEventListener('change', function() {
+      localStorage.setItem('symptomate_data_collection', this.checked);
+    });
+
+    document.getElementById('chatHistoryToggle').addEventListener('change', function() {
+      localStorage.setItem('symptomate_chat_history', this.checked);
+    });
+  </script>
+</body>
+</html>
