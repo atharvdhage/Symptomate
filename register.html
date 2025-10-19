@@ -17,30 +17,32 @@
       </div>
       
       <div class="auth-form">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" placeholder="John Doe" autocomplete="name">
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email">
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Create a strong password" autocomplete="new-password">
-        </div>
-        
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" placeholder="Confirm your password" autocomplete="new-password">
-        </div>
-        
-        <button class="start-consultation-btn" onclick="handleRegister()">
-          <span class="btn-icon">✨</span>
-          Create Account
-        </button>
+        <form onsubmit="event.preventDefault(); handleRegister();">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="John Doe" autocomplete="name">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a strong password" autocomplete="new-password">
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm your password" autocomplete="new-password">
+          </div>
+          
+          <button type="submit" class="start-consultation-btn">
+            <span class="btn-icon">✨</span>
+            Create Account
+          </button>
+        </form>
         
         <p class="auth-link">
           Already have an account? <a href="login.html">Login here</a>
@@ -115,12 +117,6 @@
       localStorage.setItem('symptomate_user', JSON.stringify(userData));
       window.location.href = 'index.html';
     }
-    
-    document.getElementById('confirmPassword').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        handleRegister();
-      }
-    });
     
     document.addEventListener('DOMContentLoaded', function() {
       const userData = JSON.parse(localStorage.getItem('symptomate_user') || 'null');

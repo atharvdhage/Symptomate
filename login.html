@@ -17,20 +17,22 @@
       </div>
       
       <div class="auth-form">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email">
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
-        </div>
-        
-        <button class="start-consultation-btn" onclick="handleLogin()">
-          <span class="btn-icon">🔐</span>
-          Login
-        </button>
+        <form onsubmit="event.preventDefault(); handleLogin();">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+          </div>
+          
+          <button type="submit" class="start-consultation-btn">
+            <span class="btn-icon">🔐</span>
+            Login
+          </button>
+        </form>
         
         <p class="auth-link">
           Don't have an account? <a href="register.html">Register here</a>
@@ -89,12 +91,6 @@
       localStorage.setItem('symptomate_user', JSON.stringify(userData));
       window.location.href = 'index.html';
     }
-    
-    document.getElementById('password').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        handleLogin();
-      }
-    });
     
     document.addEventListener('DOMContentLoaded', function() {
       const userData = JSON.parse(localStorage.getItem('symptomate_user') || 'null');
