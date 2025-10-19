@@ -195,26 +195,27 @@
     </footer>
   </div>
 
+  <script src="utils.js"></script>
   <script src="script.js"></script>
   <script>
     function saveApiKey() {
       const apiKey = document.getElementById('apiKeyInput').value;
       if (apiKey) {
         localStorage.setItem('symptomate_api_key', apiKey);
-        alert('API key saved successfully! 🔑');
+        showToast('Success', 'API key saved successfully! 🔑', 'success', 3000);
       } else {
-        alert('Please enter a valid API key.');
+        showToast('Error', 'Please enter a valid API key.', 'error', 3000);
       }
     }
 
     function exportData() {
-      alert('Data export feature coming soon! 📊');
+      showToast('Coming Soon', 'Data export feature coming soon! 📊', 'info', 3000);
     }
 
     function clearAllData() {
       if (confirm('Are you sure you want to delete all your data? This action cannot be undone.')) {
         localStorage.clear();
-        alert('All data has been cleared. 🔄');
+        showToast('Success', 'All data has been cleared. 🔄', 'success', 3000);
       }
     }
 
@@ -263,30 +264,39 @@
     document.getElementById('darkModeToggle').addEventListener('change', function() {
       localStorage.setItem('symptomate_dark_mode', this.checked);
       toggleDarkMode(this.checked);
+      showToast('Settings Updated', `Dark mode ${this.checked ? 'enabled' : 'disabled'}`, 'success', 2000);
     });
 
     document.getElementById('notificationsToggle').addEventListener('change', function() {
       localStorage.setItem('symptomate_notifications', this.checked);
+      showToast('Settings Updated', `Notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success', 2000);
     });
 
     document.getElementById('dailyRemindersToggle').addEventListener('change', function() {
       localStorage.setItem('symptomate_daily_reminders', this.checked);
+      showToast('Settings Updated', `Daily reminders ${this.checked ? 'enabled' : 'disabled'}`, 'success', 2000);
     });
 
     document.getElementById('languageSelect').addEventListener('change', function() {
       localStorage.setItem('symptomate_language', this.value);
+      const languages = {en: 'English', es: 'Español', fr: 'Français', de: 'Deutsch', it: 'Italiano', pt: 'Português'};
+      showToast('Settings Updated', `Language changed to ${languages[this.value]}`, 'success', 2000);
     });
 
     document.getElementById('responseStyleSelect').addEventListener('change', function() {
       localStorage.setItem('symptomate_response_style', this.value);
+      const styles = {detailed: 'Detailed', concise: 'Concise', balanced: 'Balanced'};
+      showToast('Settings Updated', `Response style changed to ${styles[this.value]}`, 'success', 2000);
     });
 
     document.getElementById('dataCollectionToggle').addEventListener('change', function() {
       localStorage.setItem('symptomate_data_collection', this.checked);
+      showToast('Settings Updated', `Data collection ${this.checked ? 'enabled' : 'disabled'}`, 'success', 2000);
     });
 
     document.getElementById('chatHistoryToggle').addEventListener('change', function() {
       localStorage.setItem('symptomate_chat_history', this.checked);
+      showToast('Settings Updated', `Chat history ${this.checked ? 'enabled' : 'disabled'}`, 'success', 2000);
     });
   </script>
 </body>

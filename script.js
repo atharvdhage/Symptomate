@@ -530,4 +530,8 @@ function clearChatHistory() {
   chatArea.appendChild(initialMessage);
   
   scrollToBottom();
+  
+  if (typeof showToast === 'function') {
+    showToast('Chat Cleared', 'Your chat history has been cleared successfully.', 'success', 3000);
+  }
 }
