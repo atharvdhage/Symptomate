@@ -2,15 +2,17 @@ const chatArea = document.getElementById("chat-area");
 const input = document.getElementById("user-input");
 const sendBtn = document.getElementById("send-btn");
 
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
+if (sendBtn && input && chatArea) {
+  sendBtn.addEventListener("click", sendMessage);
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
 
-// Load chat history on page load
-document.addEventListener('DOMContentLoaded', function() {
-  loadChatHistory();
-});
+  // Load chat history on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    loadChatHistory();
+  });
+}
 
 function sendMessage() {
   const text = input.value.trim();
