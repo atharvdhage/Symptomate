@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="symptomate_logo_small.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Symptomate</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="splash-body">
+  <div class="splash-container">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="main-logo">
+        <h1 class="splash-title">Welcome Back!</h1>
+        <p class="splash-subtitle">Login to continue your health journey</p>
+      </div>
+      
+      <div class="auth-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+        </div>
+        
+        <button class="start-consultation-btn" onclick="handleLogin()">
+          <span class="btn-icon">🔐</span>
+          Login
+        </button>
+        
+        <p class="auth-link">
+          Don't have an account? <a href="register.html">Register here</a>
+        </p>
+        
+        <p class="auth-link">
+          <a href="javascript:skipLogin()">Skip and continue as guest</a>
+        </p>
+      </div>
+    </div>
+    
+    <div class="splash-footer">
+      <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
+    </div>
+  </div>
+
+  <script src="utils.js"></script>
+  <script>
+    function handleLogin() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      if (!email || !password) {
+        showToast('Error', 'Please enter both email and password', 'error', 3000);
+        return;
+      }
+      
+      const users = JSON.parse(localStorage.getItem('symptomate_users') || '[]');
+      const user = users.find(u => u.email === email && u.password === password);
+      
+      if (user) {
+        const userData = {
+          email: user.email,
+          name: user.name,
+          loginTime: new Date().toISOString(),
+          isLoggedIn: true,
+          isGuest: false
+        };
+        localStorage.setItem('symptomate_user', JSON.stringify(userData));
+        showToast('Welcome Back!', `Hello ${user.name}!`, 'success', 2000);
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 500);
+      } else {
+        showToast('Login Failed', 'Invalid email or password', 'error', 3000);
+      }
+    }
+    
+    function skipLogin() {
+      const userData = {
+        name: 'Guest',
+        loginTime: new Date().toISOString(),
+        isLoggedIn: true,
+        isGuest: true
+      };
+      localStorage.setItem('symptomate_user', JSON.stringify(userData));
+      window.location.href = 'index.html';
+    }
+    
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleLogin();
+      }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const userData = JSON.parse(localStorage.getItem('symptomate_user') || 'null');
+      if (userData && userData.isLoggedIn) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -19,6 +19,11 @@
         <a href="index.html" class="nav-link">Chat</a>
         <a href="dashboard.html" class="nav-link">Dashboard</a>
         <a href="settings.html" class="nav-link active">Settings</a>
+        <div class="user-badge" id="userBadge" style="display: none;">
+          <span class="user-badge-icon">👤</span>
+          <span id="userName">User</span>
+        </div>
+        <button class="logout-btn" id="logoutBtn" style="display: none;" onclick="handleLogout()">Logout</button>
       </div>
     </nav>
 
@@ -298,6 +303,31 @@
       localStorage.setItem('symptomate_chat_history', this.checked);
       showToast('Settings Updated', `Chat history ${this.checked ? 'enabled' : 'disabled'}`, 'success', 2000);
     });
+    
+    const userData = JSON.parse(localStorage.getItem('symptomate_user') || 'null');
+    if (!userData || !userData.isLoggedIn) {
+      window.location.href = 'splash.html';
+    } else {
+      const userBadge = document.getElementById('userBadge');
+      const userName = document.getElementById('userName');
+      const logoutBtn = document.getElementById('logoutBtn');
+      
+      if (userBadge && userName && logoutBtn) {
+        userName.textContent = userData.name || 'User';
+        userBadge.style.display = 'flex';
+        logoutBtn.style.display = 'block';
+      }
+    }
+    
+    function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('symptomate_user');
+        showToast('Logged Out', 'You have been logged out successfully', 'success', 2000);
+        setTimeout(() => {
+          window.location.href = 'splash.html';
+        }, 500);
+      }
+    }
   </script>
 </body>
 </html>

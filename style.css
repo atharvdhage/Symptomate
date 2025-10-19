@@ -1164,6 +1164,120 @@ footer {
   margin: 0;
 }
 
+/* Auth Form Styles */
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #4B5563;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: white;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.05), -1px -1px 4px rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #20B2AA;
+  box-shadow: 
+    4px 4px 12px rgba(32, 178, 170, 0.2), 
+    -2px -2px 8px rgba(255, 255, 255, 1),
+    0 0 0 3px rgba(32, 178, 170, 0.1);
+}
+
+.auth-link {
+  text-align: center;
+  color: #6B7280;
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+.auth-link a {
+  color: #20B2AA;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.auth-link a:hover {
+  color: #1a9b94;
+  text-decoration: underline;
+}
+
+.splash-auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.secondary-btn {
+  background: linear-gradient(145deg, #6B7280, #4B5563) !important;
+  box-shadow: 4px 4px 12px rgba(107, 114, 128, 0.3), -2px -2px 8px rgba(139, 147, 160, 0.2) !important;
+}
+
+.secondary-btn:hover {
+  background: linear-gradient(145deg, #4B5563, #374151) !important;
+}
+
+/* User Badge in Navbar */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: linear-gradient(145deg, #E5E7EB, #D1D5DB);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #4B5563;
+  font-weight: 500;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1), -1px -1px 4px rgba(255, 255, 255, 0.8);
+}
+
+.user-badge-icon {
+  font-size: 1.1rem;
+}
+
+.logout-btn {
+  background: linear-gradient(145deg, #EF4444, #DC2626);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 3px 3px 10px rgba(239, 68, 68, 0.3), -2px -2px 6px rgba(220, 38, 38, 0.2);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(145deg, #DC2626, #B91C1C);
+  transform: translateY(-1px);
+}
+
 /* Page Transition Animations */
 .main-content {
   animation: pageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);

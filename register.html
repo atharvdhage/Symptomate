@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="symptomate_logo_small.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register | Symptomate</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="splash-body">
+  <div class="splash-container">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <img src="symptomate_logo_small.png" alt="Symptomate Logo" class="main-logo">
+        <h1 class="splash-title">Create Account</h1>
+        <p class="splash-subtitle">Join Symptomate for personalized health guidance</p>
+      </div>
+      
+      <div class="auth-form">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="John Doe" autocomplete="name">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Create a strong password" autocomplete="new-password">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" autocomplete="new-password">
+        </div>
+        
+        <button class="start-consultation-btn" onclick="handleRegister()">
+          <span class="btn-icon">✨</span>
+          Create Account
+        </button>
+        
+        <p class="auth-link">
+          Already have an account? <a href="login.html">Login here</a>
+        </p>
+        
+        <p class="auth-link">
+          <a href="javascript:skipLogin()">Skip and continue as guest</a>
+        </p>
+      </div>
+    </div>
+    
+    <div class="splash-footer">
+      <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
+    </div>
+  </div>
+
+  <script src="utils.js"></script>
+  <script>
+    function handleRegister() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (!name || !email || !password || !confirmPassword) {
+        showToast('Error', 'Please fill in all fields', 'error', 3000);
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showToast('Error', 'Passwords do not match', 'error', 3000);
+        return;
+      }
+      
+      if (password.length < 6) {
+        showToast('Error', 'Password must be at least 6 characters', 'error', 3000);
+        return;
+      }
+      
+      const users = JSON.parse(localStorage.getItem('symptomate_users') || '[]');
+      
+      if (users.find(u => u.email === email)) {
+        showToast('Error', 'An account with this email already exists', 'error', 3000);
+        return;
+      }
+      
+      users.push({ name, email, password, createdAt: new Date().toISOString() });
+      localStorage.setItem('symptomate_users', JSON.stringify(users));
+      
+      const userData = {
+        email: email,
+        name: name,
+        loginTime: new Date().toISOString(),
+        isLoggedIn: true,
+        isGuest: false
+      };
+      localStorage.setItem('symptomate_user', JSON.stringify(userData));
+      
+      showToast('Success!', 'Account created successfully!', 'success', 2000);
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    }
+    
+    function skipLogin() {
+      const userData = {
+        name: 'Guest',
+        loginTime: new Date().toISOString(),
+        isLoggedIn: true,
+        isGuest: true
+      };
+      localStorage.setItem('symptomate_user', JSON.stringify(userData));
+      window.location.href = 'index.html';
+    }
+    
+    document.getElementById('confirmPassword').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleRegister();
+      }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const userData = JSON.parse(localStorage.getItem('symptomate_user') || 'null');
+      if (userData && userData.isLoggedIn) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

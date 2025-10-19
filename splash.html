@@ -20,10 +20,21 @@
         <p>Get instant, professional health guidance powered by AI. Describe your symptoms and receive personalized recommendations.</p>
       </div>
       
-      <button class="start-consultation-btn" onclick="startConsultation()">
-        <span class="btn-icon">🩺</span>
-        Start Consultation
-      </button>
+      <div class="splash-auth-buttons">
+        <button class="start-consultation-btn" onclick="window.location.href='login.html'">
+          <span class="btn-icon">🔐</span>
+          Login
+        </button>
+        
+        <button class="start-consultation-btn secondary-btn" onclick="window.location.href='register.html'">
+          <span class="btn-icon">✨</span>
+          Register
+        </button>
+      </div>
+      
+      <p class="auth-link" style="margin-top: 20px;">
+        <a href="javascript:continueAsGuest()">Continue as Guest</a>
+      </p>
       
       <div class="splash-features">
         <div class="feature-item">
@@ -47,27 +58,21 @@
   </div>
 
   <script>
-    function startConsultation() {
-      // Store fake user login
+    function continueAsGuest() {
       const userData = {
-        username: 'User_' + Math.random().toString(36).substr(2, 9),
+        name: 'Guest',
         loginTime: new Date().toISOString(),
-        isLoggedIn: true
+        isLoggedIn: true,
+        isGuest: true
       };
       localStorage.setItem('symptomate_user', JSON.stringify(userData));
-      
-      // Redirect to main app
       window.location.href = 'index.html';
     }
     
-    // Check if user is already logged in
     document.addEventListener('DOMContentLoaded', function() {
-      const userData = localStorage.getItem('symptomate_user');
-      if (userData) {
-        // User is already logged in, redirect to app
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 1000);
+      const userData = JSON.parse(localStorage.getItem('symptomate_user') || 'null');
+      if (userData && userData.isLoggedIn) {
+        window.location.href = 'index.html';
       }
     });
   </script>
