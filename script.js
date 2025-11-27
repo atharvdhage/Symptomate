@@ -14,25 +14,56 @@ if (sendBtn && input && chatArea) {
   });
 }
 
-function sendMessage() {
+async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
-  
+
   addMessage(text, "user");
   input.value = "";
 
   // Show thinking animation
   showThinkingAnimation();
 
-  // Get AI response (currently mock, but ready for real API integration)
-  getAIResponse(text).then(response => {
+  try {
+    // 🔥 Call your backend AI endpoint
+    console.log("📤 Sending message to backend:", text);
+
+    // Use relative path (avoid hardcoded host/port) and add timeout
+    const apiUrl = "/api/ai-response";
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      // try to get response body for debug
+      const txt = await response.text().catch(() => "<no body>");
+      throw new Error(`HTTP ${response.status} ${response.statusText} - ${txt}`);
+    }
+
+    const data = await response.json().catch(async () => {
+      const txt = await response.text().catch(() => "<no body>");
+      throw new Error("Invalid JSON response: " + txt);
+    });
+
+    console.log("🤖 Received from backend:", data);
+
     hideThinkingAnimation();
-    addMessage(response, "bot");
-  }).catch(error => {
+    addMessage(data.reply || "Sorry, I didn’t understand that.", "bot");
+  } catch (error) {
+    console.error("❌ AI Response Error:", error);
     hideThinkingAnimation();
-    addMessage("I'm sorry, I'm having trouble connecting right now. Please try again later.", "bot");
-    console.error('AI Response Error:', error);
-  });
+    addMessage(
+      "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+      "bot"
+    );
+  }
 }
 
 function addMessage(msg, sender) {
