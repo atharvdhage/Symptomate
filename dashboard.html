@@ -52,7 +52,7 @@
             <div class="card-icon">📊</div>
             <h3>My Reports</h3>
             <p>View your health reports and symptom history</p>
-            <button class="card-button" onclick="showComingSoon()">View Reports</button>
+            <button class="card-button" onclick="openReports()">View Reports</button>
           </div>
 
           <div class="action-card tertiary">
@@ -60,6 +60,29 @@
             <h3>Settings</h3>
             <p>Customize your experience and preferences</p>
             <a href="settings.html" class="card-button">Open Settings</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Triage Support -->
+      <section class="triage-support">
+        <div class="triage-support-header">
+          <div>
+            <h2>Care Guidance</h2>
+            <p>Your latest triage severity determines the next best step.</p>
+          </div>
+          <div class="triage-legend">
+            <span class="legend-dot low"></span>Low
+            <span class="legend-dot moderate"></span>Moderate
+            <span class="legend-dot high"></span>High
+            <span class="legend-dot emergency"></span>Emergency
+          </div>
+        </div>
+        <div id="triageCard" class="triage-card empty">
+          <div class="triage-card-empty">
+            <h3>No triage data yet</h3>
+            <p>Start a chat so Symptomate can log your symptoms and guide you.</p>
+            <a href="index.html" class="btn-small">Start Chat</a>
           </div>
         </div>
       </section>
@@ -138,6 +161,22 @@
       </main>
     </div>
     
+    <!-- Reports Modal -->
+    <div id="reportsModal" class="reports-modal" style="display:none;">
+      <div class="reports-modal-backdrop" onclick="closeReportsModal()"></div>
+      <div class="reports-modal-content">
+        <h2>My Health Reports</h2>
+        <p class="reports-subtitle">Generated from your recent Symptomate consultations.</p>
+        <div id="reportsBody" class="reports-body">
+          <!-- Filled dynamically -->
+        </div>
+        <div class="reports-modal-actions">
+          <button class="btn-small secondary" type="button" onclick="closeReportsModal()">Close</button>
+          <button class="btn-small" type="button" onclick="downloadReport()">Download as PDF</button>
+        </div>
+      </div>
+    </div>
+    
     <!-- App Footer -->
     <footer class="app-footer">
       <p>Symptomate © 2025 | Your friendly AI Health Assistant</p>
@@ -147,8 +186,145 @@
   <script src="utils.js"></script>
   <script src="script.js"></script>
   <script>
-    function showComingSoon() {
-      showToast('Coming Soon', 'This feature is coming soon! 🚀', 'info', 3000);
+    // Simple HTML escape to keep reports safe
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    async function openReports() {
+      const modal = document.getElementById('reportsModal');
+      const body = document.getElementById('reportsBody');
+      if (!modal || !body) return;
+
+      body.innerHTML = '<p>Loading your reports...</p>';
+      modal.style.display = 'block';
+
+      try {
+        const res = await fetch('/api/history');
+        if (!res.ok) throw new Error('Failed to load history');
+        const history = await res.json();
+
+        if (!history || history.length === 0) {
+          body.innerHTML = '<p>No health activity found yet. Start a chat to generate your first report.</p>';
+          return;
+        }
+
+        const entries = history.slice().reverse(); // newest first
+        const reportSections = entries.map((item, index) => {
+          const timestamp = item.timestamp
+            ? new Date(item.timestamp * 1000).toLocaleString()
+            : 'Unknown time';
+          const triage = item.triage || {};
+          const causes = triage.causes || triage.possible_causes || [];
+          const suggestions = triage.suggestions || [];
+          const severity = (triage.severity || 'low').toLowerCase();
+          const severityLabel = severity.charAt(0).toUpperCase() + severity.slice(1);
+
+          const title =
+            causes[0] ||
+            (item.user_message ? item.user_message.slice(0, 40) + (item.user_message.length > 40 ? '...' : '') : 'Consultation');
+
+          const suggestionsHtml = suggestions.length
+            ? '<ul class="report-entry-suggestions">' +
+              suggestions.map(s => `<li>${escapeHtml(s)}</li>`).join('') +
+              '</ul>'
+            : '';
+
+          return `
+            <div class="report-entry">
+              <div class="report-entry-header">
+                <h3>Consultation #${entries.length - index}: ${escapeHtml(title)}</h3>
+                <span class="status ${escapeHtml(severity)}">${escapeHtml(severityLabel)}</span>
+              </div>
+              <p class="report-entry-date">${escapeHtml(timestamp)}</p>
+              ${
+                item.user_message
+                  ? `<p class="report-entry-message"><strong>What you shared:</strong> ${escapeHtml(item.user_message)}</p>`
+                  : ''
+              }
+              ${
+                causes.length
+                  ? `<p class="report-entry-causes"><strong>Possible causes (non-diagnostic):</strong> ${escapeHtml(
+                      causes.join(', ')
+                    )}</p>`
+                  : ''
+              }
+              ${suggestionsHtml}
+            </div>
+          `;
+        });
+
+        body.innerHTML = reportSections.join('');
+      } catch (err) {
+        console.error('Error loading reports:', err);
+        body.innerHTML = '<p>Unable to generate reports right now. Please try again later.</p>';
+        if (typeof showToast === 'function') {
+          showToast('Error', 'Unable to load your reports.', 'error', 3000);
+        }
+      }
+    }
+
+    function closeReportsModal() {
+      const modal = document.getElementById('reportsModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function downloadReport() {
+      const body = document.getElementById('reportsBody');
+      if (!body || !body.innerHTML.trim()) return;
+
+      const reportHtml = body.innerHTML;
+      const win = window.open('', '_blank');
+      if (!win) return;
+
+      win.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8" />
+            <title>Symptomate - Health Report</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; color: #111827; }
+              h1 { text-align: center; margin-bottom: 10px; }
+              h2 { text-align: center; margin-top: 0; color: #6B7280; font-size: 0.95rem; }
+              .report-entry { border: 1px solid #E5E7EB; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; }
+              .report-entry-header { display: flex; justify-content: space-between; align-items: center; }
+              .report-entry-date { font-size: 0.85rem; color: #6B7280; }
+              .report-entry-message, .report-entry-causes { margin: 8px 0; }
+              .report-entry-suggestions { margin: 6px 0 0 20px; font-size: 0.9rem; }
+              .status { padding: 3px 10px; border-radius: 999px; font-size: 0.75rem; text-transform: capitalize; }
+              .status.low { background: #D1FAE5; color: #065F46; }
+              .status.moderate { background: #FEF3C7; color: #92400E; }
+              .status.high { background: #FEE2E2; color: #991B1B; }
+              .status.emergency { background: #FECACA; color: #7F1D1D; font-weight: bold; }
+            </style>
+          </head>
+          <body>
+            <h1>Symptomate Health Report</h1>
+            <h2>Generated on ${new Date().toLocaleString()}</h2>
+            ${reportHtml}
+          </body>
+        </html>
+      `);
+      win.document.close();
+
+      // Give the new window a moment to render, then open print dialog
+      win.focus();
+      setTimeout(() => {
+        win.print();
+      }, 500);
+
+      if (typeof showToast === 'function') {
+        showToast('Report Ready', 'Use your browser\'s print dialog to save as PDF.', 'success', 3000);
+      }
     }
 
     // Dark mode functionality
@@ -178,6 +354,11 @@
           userBadge.style.display = 'flex';
           logoutBtn.style.display = 'block';
         }
+      }
+      
+      // Load health history
+      if (typeof loadHealthHistory === 'function') {
+        loadHealthHistory();
       }
     });
     

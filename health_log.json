@@ -1,0 +1,273 @@
+[
+  {
+    "timestamp": 1764389125.0712416,
+    "user_message": "i have a fever cough and cold form like 3 days",
+    "triage": {
+      "message": "I'm sorry to hear you're dealing with a fever, cough, and cold symptoms for three days. These are very common signs of a viral infection. Focusing on rest and hydration is the best approach right now. Please monitor your temperature and watch for any difficulty breathing or chest pain.\n\nI am not a doctor. This is not a replacement for professional medical advice.",
+      "severity": "moderate",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Common Cold (Viral Rhinitis)",
+        "Influenza (Flu)",
+        "COVID-19",
+        "Mild Bronchitis"
+      ],
+      "suggestions": [
+        "Ensure plenty of rest and sleep.",
+        "Increase fluid intake (water, broth, herbal tea) to prevent dehydration.",
+        "Use over-the-counter pain relievers (like acetaminophen or ibuprofen) to manage fever and body aches.",
+        "Use a humidifier or take steamy showers to help soothe the cough and congestion.",
+        "Contact a doctor if the fever exceeds 102\u00b0F (39\u00b0C) or if symptoms worsen after 5-7 days."
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389739.2691777,
+    "user_message": "i have stomachache",
+    "triage": {
+      "message": "I'm sorry to hear you're experiencing a stomachache. To help me understand better, could you tell me where exactly the pain is located (e.g., upper abdomen, lower right) and if it feels sharp, dull, or crampy? Also, have you noticed any other symptoms like nausea or fever?\nI am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "moderate",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Indigestion or gas",
+        "Mild viral or bacterial infection (stomach flu)",
+        "Dietary intolerance or irritation",
+        "Stress or anxiety"
+      ],
+      "suggestions": [
+        "Rest and avoid strenuous activity.",
+        "Sip clear fluids like water or broth to stay hydrated.",
+        "Try eating bland foods like toast or crackers if you feel hungry.",
+        "Apply a warm compress or heating pad to the abdomen for comfort."
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389783.726982,
+    "user_message": "no only stomache since i am out of town and ate a little in the train",
+    "triage": {
+      "message": "I'm sorry to hear you're dealing with stomach discomfort while traveling. That can be very unsettling. To give you the most helpful guidance, could you tell me a little more about the pain? How severe is it (mild, moderate, or severe), and is it more of a cramp, a burning sensation, or a dull ache? I am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Indigestion or gas",
+        "Mild food irritation",
+        "Change in diet due to travel"
+      ],
+      "suggestions": [
+        "Sip clear fluids like water or herbal tea to stay hydrated.",
+        "Rest and avoid strenuous activity.",
+        "If you eat, choose bland foods like crackers or plain rice.",
+        "Avoid fatty, spicy, or acidic foods for the next 24 hours."
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389809.9870975,
+    "user_message": "dull ache",
+    "triage": {
+      "message": "I understand you're experiencing a dull ache. To help me understand this better, could you tell me where exactly the ache is located, and how long you have been feeling it? Knowing the location and duration will help me provide the most relevant information.\nI am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor"
+      ],
+      "causes": [
+        "Muscle strain or overuse",
+        "Tension or stress",
+        "Minor injury"
+      ],
+      "suggestions": [
+        "Note the exact location and intensity of the ache",
+        "Rest the affected area if possible",
+        "Stay well hydrated throughout the day"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389833.2109597,
+    "user_message": "1 day and near the belly",
+    "triage": {
+      "message": "Thank you for sharing the location and duration. To help me understand better, could you please describe the specific symptom you are experiencing near your belly? Is it pain, a rash, swelling, or something else?\nI am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Minor muscle strain",
+        "Mild digestive upset"
+      ],
+      "suggestions": [
+        "Rest and avoid strenuous activity",
+        "Drink plenty of water",
+        "Pay attention to any changes in the symptom"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389855.7700748,
+    "user_message": "pain",
+    "triage": {
+      "message": "I am sorry to hear you are experiencing pain. Pain can mean many different things, so to provide you with the most helpful information, could you tell me where the pain is located and how long you have been feeling it? This information will help me understand the situation better. I am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor"
+      ],
+      "causes": [
+        "Muscle strain or overuse",
+        "Minor irritation or inflammation",
+        "Tension or stress"
+      ],
+      "suggestions": [
+        "Rest the affected area if possible",
+        "Observe if the pain changes with movement or position",
+        "Stay hydrated throughout the day"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389906.9398067,
+    "user_message": "pain is located at the belly and its for 1 day",
+    "triage": {
+      "message": "I understand you're experiencing abdominal pain. To help me understand this better, could you tell me exactly where the pain is located (upper, lower, left, or right) and if it feels sharp, dull, or crampy? Are you experiencing any other symptoms, such as fever, nausea, or changes in bowel habits?\nI am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Indigestion or gas",
+        "Mild stomach upset",
+        "Muscle strain"
+      ],
+      "suggestions": [
+        "Rest and avoid strenuous activity.",
+        "Drink plenty of water or clear fluids.",
+        "Try eating bland foods like crackers or toast.",
+        "Avoid fatty, spicy, or acidic foods for now."
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389951.763495,
+    "user_message": "lower abdomin  dull no other symptoms",
+    "triage": {
+      "message": "I understand you're experiencing a dull pain in your lower abdomen. Abdominal pain can stem from many common issues, but to give you the most helpful guidance, I need a little more detail. Is the pain centered, on the left side, or the right side? Also, how long have you been experiencing this dull pain? I am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Gas or indigestion",
+        "Constipation",
+        "Minor muscle strain"
+      ],
+      "suggestions": [
+        "Rest and avoid strenuous activity",
+        "Ensure adequate hydration",
+        "Try gentle movement, like a short walk",
+        "Avoid heavy or greasy foods for a few hours"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764389991.4507823,
+    "user_message": "centred no left or right and its exesting for like 1 day",
+    "triage": {
+      "message": "I understand you're feeling exhausted and experiencing a centered symptom that has lasted about a day. To help me understand this better, could you please tell me what kind of symptom you are feeling (is it pain, pressure, dizziness, etc.) and where exactly on your body it is located? I am not a doctor. This is not a substitute for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor"
+      ],
+      "causes": [
+        "General fatigue",
+        "Early stage viral illness (like a cold)",
+        "Stress or lack of sleep"
+      ],
+      "suggestions": [
+        "Get plenty of rest",
+        "Ensure you are staying well hydrated",
+        "Avoid strenuous activity for now"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764394002.816972,
+    "user_message": "hi",
+    "triage": {
+      "message": "Hello again! I'm ready to help. To get started, please tell me what symptoms you are experiencing and how long they have been bothering you. I am not a doctor. This is not a replacement for professional medical advice.",
+      "severity": "low",
+      "flags": [
+        "monitor"
+      ],
+      "causes": [
+        "Need more information",
+        "General inquiry"
+      ],
+      "suggestions": [
+        "Describe your symptoms clearly",
+        "Mention when symptoms started",
+        "Note any recent changes in your health"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764394010.5003686,
+    "user_message": "i have fever",
+    "triage": {
+      "message": "I understand you have a fever. To give you the best guidance, could you tell me: How high is your temperature (the reading)? How long have you had the fever? Are you experiencing any other symptoms like chills, body aches, or a sore throat? In the meantime, please focus on rest and hydration. I am not a doctor. This is not a replacement for professional medical advice.",
+      "severity": "moderate",
+      "flags": [
+        "monitor",
+        "home-care"
+      ],
+      "causes": [
+        "Viral infection (e.g., cold or flu)",
+        "Bacterial infection",
+        "Inflammatory response",
+        "Mild dehydration"
+      ],
+      "suggestions": [
+        "Drink plenty of fluids (water, clear broth) to prevent dehydration",
+        "Rest and avoid strenuous activity",
+        "Use over-the-counter fever reducers (like acetaminophen or ibuprofen), if appropriate",
+        "Wear light clothing and keep the room cool"
+      ]
+    }
+  },
+  {
+    "timestamp": 1764394524.1725495,
+    "user_message": "fiver",
+    "triage": {
+      "message": "Hello! I understand you are experiencing a fever. To give you the best guidance, could you tell me how high your temperature is and if you have any other symptoms like chills, headache, or body aches? In the meantime, please focus on rest and hydration. I am not a doctor. This is not a replacement for professional medical advice.",
+      "severity": "moderate",
+      "flags": [
+        "monitor",
+        "home-care",
+        "see-doctor"
+      ],
+      "causes": [
+        "Viral infection (e.g., common cold or flu)",
+        "Bacterial infection",
+        "Inflammation",
+        "Heat exhaustion"
+      ],
+      "suggestions": [
+        "Rest completely",
+        "Drink plenty of fluids (water or electrolyte solutions)",
+        "Take acetaminophen or ibuprofen for comfort and to help lower the temperature (follow package directions)",
+        "Wear light clothing"
+      ]
+    }
+  }
+]

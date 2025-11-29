@@ -28,6 +28,17 @@ async function sendMessage() {
     // 🔥 Call your backend AI endpoint
     console.log("📤 Sending message to backend:", text);
 
+    // --- NEW: Prepare History for Context ---
+    // We get the full history, but we exclude the last item (slice 0, -1)
+    // because we just added the current message to history in the line above (addMessage),
+    // and we are sending it explicitly in the 'message' field.
+    const rawHistory = getChatHistory();
+    const contextHistory = rawHistory.slice(0, -1).map(msg => ({
+      role: msg.sender === 'user' ? 'user' : 'model', // Map 'bot' -> 'model'
+      content: msg.message
+    }));
+    // ----------------------------------------
+
     // Use relative path (avoid hardcoded host/port) and add timeout
     const apiUrl = "/api/ai-response";
     const controller = new AbortController();
@@ -36,7 +47,10 @@ async function sendMessage() {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text }),
+      body: JSON.stringify({ 
+        message: text,
+        history: contextHistory // <--- Sending history here
+      }),
       signal: controller.signal,
     });
     clearTimeout(timeoutId);
@@ -55,7 +69,16 @@ async function sendMessage() {
     console.log("🤖 Received from backend:", data);
 
     hideThinkingAnimation();
+    
+    // The backend returns { reply: "...", triage: {...} }
+    // We display the conversational reply.
     addMessage(data.reply || "Sorry, I didn’t understand that.", "bot");
+    
+    // Optional: If you want to use the structured data later, you can access data.triage here.
+    if (data.triage && data.triage.stage === 'triage') {
+        console.log("✅ Triage Complete:", data.triage);
+    }
+
   } catch (error) {
     console.error("❌ AI Response Error:", error);
     hideThinkingAnimation();
@@ -197,277 +220,8 @@ function hideThinkingAnimation() {
 }
 
 function getMockResponse(input) {
-  input = input.toLowerCase();
-  
-  // Headache responses
-  if (input.includes("headache") || input.includes("head pain")) {
-    return `🩺 Possible Causes:
-Headaches can be caused by dehydration, stress, lack of sleep, eye strain, or tension. Sometimes they're related to weather changes or certain foods.
-
-💡 Recommendations:
-• Stay hydrated with plenty of water
-• Rest in a quiet, dark room
-• Apply a cool compress to your forehead
-• Practice relaxation techniques
-
-⚠️ When to see a doctor:
-Seek medical attention if your headache is severe, sudden, or accompanied by fever, neck stiffness, or vision changes.
-
-Would you like to know about natural headache remedies?`;
-  }
-  
-  // Fever responses
-  if (input.includes("fever") || input.includes("temperature")) {
-    return `🩺 Possible Causes:
-A fever usually indicates your body is fighting an infection. It could be viral, bacterial, or related to other conditions.
-
-💡 Recommendations:
-• Monitor your temperature regularly
-• Stay hydrated with water and electrolyte drinks
-• Get plenty of rest
-• Use fever-reducing medication if needed
-
-⚠️ When to see a doctor:
-Contact a doctor if fever is above 103°F (39.4°C), lasts more than 3 days, or is accompanied by severe symptoms.
-
-Are you experiencing any other symptoms along with the fever?`;
-  }
-  
-  // Cough responses
-  if (input.includes("cough") || input.includes("coughing")) {
-    return `🩺 Possible Causes:
-Coughs can be caused by colds, allergies, dry air, or irritants. They help clear your airways of mucus and foreign particles.
-
-💡 Recommendations:
-• Stay hydrated with warm liquids
-• Use a humidifier to add moisture to the air
-• Try honey (for adults) or throat lozenges
-• Avoid irritants like smoke
-
-⚠️ When to see a doctor:
-See a doctor if your cough lasts more than 3 weeks, produces blood, or is accompanied by difficulty breathing.
-
-Is your cough dry or do you have phlegm?`;
-  }
-  
-  // Sore throat responses
-  if (input.includes("sore throat") || input.includes("throat pain")) {
-    return `🩺 Possible Causes:
-Sore throats are often caused by viral infections, bacterial infections, allergies, or dry air. Most are viral and resolve on their own.
-
-💡 Recommendations:
-• Gargle with warm salt water
-• Drink warm tea with honey
-• Use throat lozenges or sprays
-• Stay hydrated and rest your voice
-
-⚠️ When to see a doctor:
-Seek medical care if you have difficulty swallowing, breathing, or if symptoms last more than a week.
-
-Are you also experiencing any fever or swollen glands?`;
-  }
-  
-  // Nausea responses
-  if (input.includes("nausea") || input.includes("nauseous") || input.includes("sick to stomach")) {
-    return `🩺 Possible Causes:
-Nausea can be caused by food poisoning, motion sickness, pregnancy, medications, stress, or digestive issues.
-
-💡 Recommendations:
-• Eat small, bland meals (crackers, rice, bananas)
-• Stay hydrated with small sips of water
-• Try ginger tea or ginger candies
-• Avoid strong smells and greasy foods
-
-⚠️ When to see a doctor:
-Contact a doctor if nausea is severe, persistent, or accompanied by vomiting, fever, or severe abdominal pain.
-
-Have you been able to keep any food or liquids down?`;
-  }
-  
-  // Fatigue responses
-  if (input.includes("fatigue") || input.includes("tired") || input.includes("exhausted") || input.includes("weak")) {
-    return `🩺 Possible Causes:
-Fatigue can result from lack of sleep, stress, poor nutrition, dehydration, or underlying health conditions.
-
-💡 Recommendations:
-• Ensure 7-9 hours of quality sleep
-• Stay hydrated and eat balanced meals
-• Get regular exercise (even light activity)
-• Practice stress management techniques
-
-⚠️ When to see a doctor:
-See a doctor if fatigue is severe, persistent, or accompanied by other concerning symptoms like weight loss or fever.
-
-How long have you been feeling this way?`;
-  }
-  
-  // Dizziness responses
-  if (input.includes("dizzy") || input.includes("dizziness") || input.includes("lightheaded")) {
-    return `🩺 Possible Causes:
-Dizziness can be caused by dehydration, low blood pressure, inner ear problems, medications, or standing up too quickly.
-
-💡 Recommendations:
-• Sit or lie down when dizzy
-• Stay hydrated with water
-• Stand up slowly from sitting/lying
-• Avoid sudden head movements
-
-⚠️ When to see a doctor:
-Seek immediate medical attention if dizziness is severe, accompanied by chest pain, or causes falls.
-
-Does the dizziness happen when you stand up or move your head?`;
-  }
-  
-  // Stomach pain responses
-  if (input.includes("stomach pain") || input.includes("stomach ache") || input.includes("abdominal pain")) {
-    return `🩺 Possible Causes:
-Stomach pain can be caused by indigestion, gas, food poisoning, stress, or digestive issues like IBS or gastritis.
-
-💡 Recommendations:
-• Eat smaller, more frequent meals
-• Avoid spicy, greasy, or acidic foods
-• Try peppermint tea or ginger
-• Apply a warm compress to your abdomen
-
-⚠️ When to see a doctor:
-Seek medical care if pain is severe, persistent, or accompanied by fever, vomiting, or blood in stool.
-
-Is the pain sharp, crampy, or more of a dull ache?`;
-  }
-  
-  // Back pain responses
-  if (input.includes("back pain") || input.includes("backache")) {
-    return `🩺 Possible Causes:
-Back pain often results from poor posture, muscle strain, sitting too long, or lifting heavy objects incorrectly.
-
-💡 Recommendations:
-• Apply ice for the first 48 hours, then heat
-• Practice gentle stretching and movement
-• Maintain good posture
-• Consider over-the-counter pain relief
-
-⚠️ When to see a doctor:
-See a doctor if pain is severe, lasts more than a few days, or is accompanied by numbness or weakness.
-
-Did this start after any specific activity or injury?`;
-  }
-  
-  // Cold symptoms responses
-  if (input.includes("cold") || input.includes("runny nose") || input.includes("congestion")) {
-    return `🩺 Possible Causes:
-Cold symptoms are usually caused by viral infections. They're very common and typically resolve within 7-10 days.
-
-💡 Recommendations:
-• Get plenty of rest and sleep
-• Stay hydrated with warm fluids
-• Use saline nasal sprays or rinses
-• Consider over-the-counter cold medications
-
-⚠️ When to see a doctor:
-Contact a doctor if symptoms worsen, last more than 10 days, or you develop a high fever.
-
-Are you experiencing any fever or body aches?`;
-  }
-  
-  // Joint pain responses
-  if (input.includes("joint pain") || input.includes("joint ache") || input.includes("arthritis")) {
-    return `🩺 Possible Causes:
-Joint pain can be caused by overuse, injury, arthritis, or inflammation. Weather changes can also affect joint comfort.
-
-💡 Recommendations:
-• Apply ice or heat as appropriate
-• Try gentle stretching and low-impact exercise
-• Consider anti-inflammatory medications
-• Maintain a healthy weight
-
-⚠️ When to see a doctor:
-See a doctor if joint pain is severe, persistent, or accompanied by swelling, redness, or limited mobility.
-
-Which joints are bothering you most?`;
-  }
-  
-  // Insomnia responses
-  if (input.includes("insomnia") || input.includes("can't sleep") || input.includes("trouble sleeping")) {
-    return `🩺 Possible Causes:
-Sleep difficulties can be caused by stress, anxiety, caffeine, screen time before bed, or irregular sleep schedules.
-
-💡 Recommendations:
-• Maintain a consistent sleep schedule
-• Create a relaxing bedtime routine
-• Avoid screens 1 hour before bed
-• Keep your bedroom cool, dark, and quiet
-
-⚠️ When to see a doctor:
-Consult a doctor if sleep problems persist for weeks or significantly affect your daily functioning.
-
-What time do you usually try to go to sleep?`;
-  }
-  
-  // Skin rash responses
-  if (input.includes("rash") || input.includes("skin irritation") || input.includes("itchy skin")) {
-    return `🩺 Possible Causes:
-Skin rashes can be caused by allergies, irritants, infections, or skin conditions like eczema or dermatitis.
-
-💡 Recommendations:
-• Avoid scratching the affected area
-• Use gentle, fragrance-free skincare products
-• Apply cool compresses or calamine lotion
-• Identify and avoid potential triggers
-
-⚠️ When to see a doctor:
-See a doctor if the rash is spreading, painful, or accompanied by fever or difficulty breathing.
-
-When did you first notice the rash?`;
-  }
-  
-  // Chest pain responses
-  if (input.includes("chest pain") || input.includes("chest discomfort")) {
-    return `🩺 Possible Causes:
-Chest pain can have many causes, from muscle strain and heartburn to more serious cardiac conditions.
-
-💡 Recommendations:
-• Rest and avoid strenuous activity
-• Try antacids if it might be heartburn
-• Practice deep breathing exercises
-• Monitor your symptoms closely
-
-⚠️ When to see a doctor:
-Seek immediate medical attention for chest pain, especially if it's severe, crushing, or accompanied by shortness of breath.
-
-Is the pain sharp, dull, or does it feel like pressure?`;
-  }
-  
-  // Anxiety responses
-  if (input.includes("anxiety") || input.includes("anxious") || input.includes("worried") || input.includes("panic")) {
-    return `🩺 Possible Causes:
-Anxiety can be triggered by stress, life changes, health concerns, or underlying anxiety disorders.
-
-💡 Recommendations:
-• Practice deep breathing exercises
-• Try meditation or mindfulness techniques
-• Maintain regular exercise and sleep
-• Consider talking to a mental health professional
-
-⚠️ When to see a doctor:
-Seek professional help if anxiety is severe, persistent, or significantly impacts your daily life.
-
-Would you like some breathing exercises to try right now?`;
-  }
-  
-  // Default response
-  return `🩺 Assessment:
-Thank you for sharing your symptoms with me. I understand you're not feeling your best right now.
-
-💡 General Recommendations:
-• Stay hydrated with plenty of water
-• Get adequate rest and sleep
-• Eat nutritious, balanced meals
-• Practice stress management techniques
-
-⚠️ When to see a doctor:
-If your symptoms persist, worsen, or are accompanied by severe pain, fever, or other concerning signs, please consult a healthcare professional.
-
-Can you tell me more about when these symptoms started?`;
+  // This is legacy mock code, not used when server is connected
+  return "I'm connected to the server now.";
 }
 
 // localStorage Functions for Chat History
@@ -567,4 +321,47 @@ function clearChatHistory() {
   if (typeof showToast === 'function') {
     showToast('Chat Cleared', 'Your chat history has been cleared successfully.', 'success', 3000);
   }
+}
+
+// Health History Functions
+async function loadHealthHistory() {
+    try {
+        const res = await fetch("/api/history");
+        const history = await res.json();
+
+        const container = document.querySelector(".history-cards");
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (!history || history.length === 0) {
+            container.innerHTML = '<div class="history-item"><div class="history-content"><p>No health history yet. Start a chat to see your activity here.</p></div></div>';
+            return;
+        }
+
+        history.slice(-5).reverse().forEach(item => {
+            const timestamp = item.timestamp ? new Date(item.timestamp * 1000).toLocaleString() : "Unknown time";
+            const firstCause = item.triage?.causes?.[0] || item.user_message?.substring(0, 30) + "..." || "Symptoms Logged";
+            const severity = item.triage?.severity || "low";
+            
+            container.innerHTML += `
+              <div class="history-item">
+                <div class="history-icon">🤒</div>
+                <div class="history-content">
+                  <h4>${firstCause}</h4>
+                  <p>${timestamp}</p>
+                  <span class="status ${severity}">
+                    ${severity}
+                  </span>
+                </div>
+              </div>
+            `;
+        });
+    } catch (error) {
+        console.error("Error loading health history:", error);
+        const container = document.querySelector(".history-cards");
+        if (container) {
+            container.innerHTML = '<div class="history-item"><div class="history-content"><p>Unable to load health history.</p></div></div>';
+        }
+    }
 }
